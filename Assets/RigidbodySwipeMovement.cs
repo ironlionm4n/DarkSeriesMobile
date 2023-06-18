@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Cinemachine;
 using Lean.Touch;
 using UnityEngine;
 
@@ -54,5 +50,7 @@ public class RigidbodySwipeMovement : MonoBehaviour
     {
         isSwiping = false;
         rigidBody.velocity = Vector2.zero;
+        playerAnimator.OnFingerUp();
+        playerAnimator.OnFingerSwipe(Vector2.zero);
     }
 }
