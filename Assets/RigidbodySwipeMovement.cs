@@ -4,7 +4,8 @@ using UnityEngine;
 public class RigidbodySwipeMovement : MonoBehaviour
 {
     [SerializeField] private PlayerAnimator playerAnimator;
-    private Rigidbody2D rigidBody;
+    private Rigidbody2D _rigidBody;
+    private Gun _gun;
     public float speed = 10f;
 
     private Vector2 swipeStartPos;
@@ -12,7 +13,8 @@ public class RigidbodySwipeMovement : MonoBehaviour
 
     private void Awake()
     {
-        rigidBody = GetComponent<Rigidbody2D>();
+        _rigidBody = GetComponent<Rigidbody2D>();
+        _gun = GetComponent<Gun>();
     }
 
     private void OnEnable()
@@ -34,22 +36,24 @@ public class RigidbodySwipeMovement : MonoBehaviour
         swipeStartPos = finger.ScreenPosition;
         isSwiping = true;
     }
-    
+
     private void OnFingerUpdate(LeanFinger finger)
     {
         if (isSwiping)
         {
             var swipeDelta = finger.ScreenPosition - swipeStartPos;
             var targetDirection = swipeDelta.normalized;
+            _gun.OnFingerSwipe(targetDirection);
             playerAnimator.OnFingerSwipe(targetDirection);
-            rigidBody.velocity = targetDirection * speed;
+            _rigidBody.velocity = targetDirection * speed;
         }
     }
 
     private void OnFingerUp(LeanFinger finger)
     {
         isSwiping = false;
-        rigidBody.velocity = Vector2.zero;
+        _gun.OnFingerRelease();
+        _rigidBody.velocity = Vector2.zero;
         playerAnimator.OnFingerUp();
         playerAnimator.OnFingerSwipe(Vector2.zero);
     }
