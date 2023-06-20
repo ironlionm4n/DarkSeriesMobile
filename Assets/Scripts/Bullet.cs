@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
     {
         lifeTime -= Time.deltaTime;
         if(lifeTime <= 0) Destroy(gameObject);
-        _rigidbody.velocity = MoveDirection * (MoveSpeed * Time.deltaTime);
+        _rigidbody.velocity = MoveDirection.normalized * (MoveSpeed * Time.deltaTime);
     }
 
     private void OnBecameInvisible()

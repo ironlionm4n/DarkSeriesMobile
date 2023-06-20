@@ -10,17 +10,21 @@ public class Gun : MonoBehaviour
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float timeBetweenShots;
 
-    private bool _isSwiping;
     private Vector2 _targetDirection;
     private bool _isShooting;
 
-    private void Update()
+    private void OnEnable()
     {
-        if (_isSwiping && LeanTouch.Fingers.Count > 1)
-            if (!_isShooting)
-                StartCoroutine(ShootBulletRoutine());
+        JoystickManager.DetectedMovement += OnFingerSwipe;
     }
 
+    public void HandleShootBullet()
+    {
+        if (!_isShooting)
+        {
+            StartCoroutine(ShootBulletRoutine());    
+        }
+    }
     private IEnumerator ShootBulletRoutine()
     {
         _isShooting = true;
@@ -35,12 +39,6 @@ public class Gun : MonoBehaviour
 
     public void OnFingerSwipe(Vector2 direction)
     {
-        _isSwiping = true;
         _targetDirection = direction;
-    }
-
-    public void OnFingerRelease()
-    {
-        _isSwiping = false;
     }
 }
