@@ -18,13 +18,21 @@ public class Gun : MonoBehaviour
         JoystickManager.DetectedMovement += OnFingerSwipe;
     }
 
+    private void Update()
+    {
+        if (!HoldShoot.IsHeldDown) return;
+        
+        HandleShootBullet();
+    }
+
     public void HandleShootBullet()
     {
-        if (!_isShooting)
+        if (HoldShoot.IsHeldDown && !_isShooting)
         {
-            StartCoroutine(ShootBulletRoutine());    
+            StartCoroutine(ShootBulletRoutine());
         }
     }
+
     private IEnumerator ShootBulletRoutine()
     {
         _isShooting = true;
