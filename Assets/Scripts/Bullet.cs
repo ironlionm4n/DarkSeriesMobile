@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float lifeTime;
     public float MoveSpeed { get; set; }
     public Vector2 MoveDirection;
+    public int Damage;
 
     private Rigidbody2D _rigidbody;
 

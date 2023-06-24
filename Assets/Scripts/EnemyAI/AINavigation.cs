@@ -36,7 +36,7 @@ public class AINavigation : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(Vector2.Distance(transform.position, _playerTransform.position));
+        //Debug.Log(Vector2.Distance(transform.position, _playerTransform.position));
     }
 
     private IEnumerator WarriorStateMachine()
